@@ -128,7 +128,7 @@ docker run hello-world
 
 ## CUDA + Docker
 
-1. Verify the installation with the command `nvidia-smi`. You will see following output:
+1. Verify if you have CUDA installed by running `nvidia-smi`. You should see following output:
 
 ```
     +-----------------------------------------------------------------------------+
@@ -235,6 +235,22 @@ source ~/.bashrc
 hip
 ```
 
+## Verifying Installation
 
+1. Now that you have the Docker environement installed, verify if ROS and assocaited GUI tools can be run as follows. In a new terminal:
+
+```bash
+hip 
+roscore
+```
+
+2. Run RViz:
+
+```
+hip 
+rosrun rviz rviz
+```
+
+If you see that RViz has opened without any issues, you're done!
 
 ## You're Done!
