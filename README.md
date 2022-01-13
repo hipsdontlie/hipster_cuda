@@ -1,4 +1,3 @@
-# hipster_cuda
 # Hipster Development Environment Setup 
 
 The following steps will walk you through the complete development environment setup using Docker and ROS. 
