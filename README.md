@@ -235,6 +235,15 @@ source ~/.bashrc
 hip
 ```
 
+5. To prevent your docker shell on crashing and exiting when there are errors encountered, you need to add the following line to the ~/.bashrc file in your docker environment. To do this, open a new shell and do the following: 
+
+```bash
+hip
+echo 'set +e' >> ~/.bashrc
+```
+
+
+
 ## Verifying Installation
 
 1. Now that you have the Docker environement installed, verify if ROS and assocaited GUI tools can be run as follows. In a new terminal:
