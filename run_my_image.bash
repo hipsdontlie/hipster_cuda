@@ -3,7 +3,7 @@
 XAUTH=/tmp/.docker.xauth
 WORKSPACE_DIR=~/arthur_ws
 CONTAINER_NAME="hipster-melodic-cuda-configured"
-IMAGE_NAME="kaushikbalasundar/manipulation_env_cuda_10_1:	"
+IMAGE_NAME="kaushikbalasundar/manipulation_env_cuda_10_1:cuda"
 USER_NAME=root
 HOME_DIR=~/
 
