@@ -177,7 +177,7 @@ git clone https://github.com/hipsdontlie/hipster_cuda.git
 2. Pull the docker image from DockerHub
 
 ```bash
-docker pull kaushikbalasundar/manipulation_env_cuda_10_1:cuda
+docker pull kaushikbalasundar/manipulation_env_cuda_10_1:latest
 ```
 
 3. Add the following alias to your ~/.bashrc
