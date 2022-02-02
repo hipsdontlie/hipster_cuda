@@ -79,21 +79,7 @@ The motivation behind using Docker is that all developers can remain on a unifor
 sudo apt-get remove docker docker-engine docker.io containerd runc
 ```
 
-2. Installation 
-
-```bash
-sudo apt-get update
-sudo apt-get install \
-    ca-certificates \
-    curl \
-    gnupg \
-    lsb-release
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
-  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-sudo apt-get install docker-ce docker-ce-cli containerd.io
-```
+2. Installation: Follow the instructions here to setup and have docker running. 
 
 3. Test if docker is installed correctly by running the ``` hello-world ``` image:
 
@@ -149,46 +135,9 @@ docker run hello-world
     +-----------------------------------------------------------------------------+
 ```
 
-If NVIDIA driver is not pre-installed with your Ubuntu distribution, you can install it with `sudo apt install nvidia-XXX` (XXX is the version, the newest one is 440) or download the appropriate [NVIDIA driver](https://www.nvidia.com/en-us/drivers/unix/linux-amd64-display-archive/) and execute the binary as sudo.
+If NVIDIA driver is not pre-installed with your Ubuntu distribution, you can install it with `sudo apt install nvidia-XXX` (XXX is the version, the newest one is 495) or download the appropriate [NVIDIA driver](https://www.nvidia.com/en-us/drivers/unix/linux-amd64-display-archive/) and execute the binary as sudo.
 
-2. Install NVIDIA container runtime:
-
-```bash
-curl -s -L https://nvidia.github.io/nvidia-container-runtime/gpgkey | sudo apt-key add -
-distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
-curl -s -L https://nvidia.github.io/nvidia-container-runtime/$distribution/nvidia-container-runtime.list |\
-    sudo tee /etc/apt/sources.list.d/nvidia-container-runtime.list
-sudo apt-get update
-sudo apt-get install nvidia-container-runtime
-```
-
-3. Restart Docker 
-
-```bash
-sudo systemctl stop docker
-sudo systemctl start docker
-```
-
-4. Run CUDA in docker. This will pull the CUDA image and run it on docker. 
-
-```bash
-docker run --gpus all nvidia/cuda:10.1-cudnn7-devel nvidia-smi
-```
-
-5. If you get the same output as above after running step 4, you're done!
-
-6. Install Nvidia-docker-2 for hardware acceleration:
-
-```
-sudo apt-get install -y nvidia-docker2
-```
-
-7. Restart daemon and docker 
-
-```
-sudo systemctl daemon-reload
-sudo systemctl restart docker
-```
+Install the NVIDIA docker container [here](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html). 
 
 ## Configure Docker to start on boot
 
@@ -207,7 +156,16 @@ Run this to allow xhost-server run GUI applications from any client:
 xhost +
 ```
 
-## Pullling the Docker Environment
+## Setup your workspace 
+
+```bash
+mkdir -p arthur_ws/src
+cd src 
+```
+
+Clone all the required repositories inside your /src folder. If you have ROS installed in your local system, make sure that you do not use this workspace for projects locally since this will conflict with the make files created by Docker. 
+
+## Pulling the Docker Environment
 
 1. Start by cloning the setup_repository from the repository to your home directory:
 
@@ -242,8 +200,6 @@ hip
 echo 'set +e' >> ~/.bashrc
 ```
 
-
-
 ## Verifying Installation
 
 1. Now that you have the Docker environement installed, verify if ROS and assocaited GUI tools can be run as follows. In a new terminal:
@@ -263,3 +219,34 @@ rosrun rviz rviz
 If you see that RViz has opened without any issues, you're done!
 
 ## You're Done!
+
+
+
+## Pushing an image to DockerHub
+
+TODO
+
+## Appendix
+
+For whatever reason, if you need to remove and reinstall the image, first stop the container, then remove the container and finally remove the image.
+
+1. Stopping the container
+
+```
+docker container stop hipster-melodic-cuda-configured	
+```
+
+2. Removing the container 
+
+```
+docker container rm hipster-melodic-cuda-configured
+```
+
+3. Remove the image 
+
+```
+docker image rm kaushikbalasundar/manipulation_env_cuda_10_1:cuda
+```
+
+4. Now, repeat repeat the instructions above on pulling the development environment from step 2. 
+
